@@ -1,0 +1,30 @@
+//GET
+query {
+  items {
+    id
+    nombre
+    descripcion
+    fechaCreacion
+  }
+}
+
+//POST
+mutation {
+  createItem(nombre: "Item 1", descripcion: "Primer item") {
+    id
+    nombre
+  }
+}
+
+//UPDATE
+mutation {
+  updateItem(id: 1, nombre: "Item actualizado") {
+    id
+    nombre
+  }
+}
+
+//DELETE
+mutation {
+  deleteItem(id: 1)
+}
