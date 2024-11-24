@@ -1,3 +1,22 @@
+npm run start:dev
+
+docker build -t graphql-items .
+
+
+
+
+kubectl apply -f cronjob.yaml
+
+
+kubectl delete job clean-old-items-job-manual
+
+kubectl create job --from=cronjob/clean-old-items-cronjob clean-old-items-job-manual
+
+
+kubectl get pods
+kubectl logs <pod-name>
+
+
 //GET
 query {
   items {

@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: clean-old-items-cronjob
+spec:
+  schedule: "0 0 * * *" # Ejecuta a la medianoche diariamente
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: clean-old-items
+              image: laem024/graphql-items:latest # Cambia por tu imagen Docker
+              imagePullPolicy: Always
+              command: ["npm", "run", "start:prod"] # Asegúrate de que tu comando esté configurado para ejecutar la tarea
+              env:
+                - name: DATABASE_HOST
+                  value: "localhost"
+                - name: DATABASE_PORT
+                  value: "5432"
+                - name: DATABASE_USERNAME
+                  value: "postgres"
+                - name: DATABASE_PASSWORD
+                  value: "root"
+                - name: DATABASE_NAME
+                  value: "nestjs_items"
+          restartPolicy: OnFailure
