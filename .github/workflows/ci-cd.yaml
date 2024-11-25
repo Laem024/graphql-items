@@ -57,9 +57,14 @@ jobs:
 
       - name: Set up Kubeconfig
         env:
+          mkdir -p ~/.kube
           KUBECONFIG: ${{ secrets.KUBE_CONFIG }}
         run: |
+          mkdir -p ~/.kube
           echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > ~/.kube/config
+
+      - name: Verify kubectl connection
+        run: kubectl get nodes
 
       - name: Deploy to Kubernetes (Testing)
         run: |
