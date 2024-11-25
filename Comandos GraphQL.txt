@@ -33,6 +33,7 @@ kubectl get pods
 kubectl logs <pod-name>
 
 //
+//
 
 RabbitMQ 
 
