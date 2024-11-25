@@ -32,7 +32,7 @@ kubectl create job --from=cronjob/clean-old-items-cronjob clean-old-items-job-ma
 kubectl get pods
 kubectl logs <pod-name>
 
-
+//
 
 RabbitMQ 
 
