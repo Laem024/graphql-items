@@ -4,6 +4,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Item } from '../items/item.entity';
 import { LessThan } from 'typeorm';
+import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
 
 
 @Injectable()
@@ -28,3 +30,29 @@ export class TasksService {
     this.logger.log(`Registros eliminados: ${result.affected}`);
   }
 }
+
+
+describe('TasksService', () => {
+  let service: TasksService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        TasksService,
+        {
+          provide: getRepositoryToken(Item),
+          useValue: {
+            find: jest.fn(),
+            delete: jest.fn(),
+          },
+        },
+      ],
+    }).compile();
+
+    service = module.get<TasksService>(TasksService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+});
