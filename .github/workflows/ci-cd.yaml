@@ -62,9 +62,6 @@ jobs:
           mkdir -p ~/.kube
           echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > ~/.kube/config
 
-      - name: Verify kubectl connection
-        run: kubectl get nodes
-
       - name: Deploy to Kubernetes (Testing)
         run: |
           kubectl apply -f k8s/testing
