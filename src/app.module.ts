@@ -6,6 +6,10 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ItemsModule } from './items/items.module';
 import { TasksService } from './tasks/tasks.service';
 import { ConfigModule } from '@nestjs/config';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ConsumerModule } from './consumer/consumer.module';
+
+
 
 @Module({
   imports: [
@@ -26,7 +30,22 @@ import { ConfigModule } from '@nestjs/config';
       synchronize: true,
     }),
     ItemsModule,
+    ClientsModule.register([
+      {
+        name: 'RABBITMQ_SERVICE',
+        transport: Transport.RMQ,
+        options: {
+          urls: ['amqp://guest:guest@localhost:5672'],
+          queue: 'items_queue',
+          queueOptions: {
+            durable: true,
+          },
+        },
+      },
+    ]),
+    ConsumerModule,
   ],
   providers: [TasksService],
+  exports: [ClientsModule],
 })
 export class AppModule {}

@@ -1,7 +1,23 @@
 npm run start:dev
 
+docker network connect app-network b14b77e8df5e
+
+ docker exec -it b14b77e8df5e /bin/sh
+
+
 docker build -t graphql-items .
 
+docker build -t nestjs-app .
+
+docker build -t laem024/graphql-items:latest .
+
+
+
+docker tag nestjs-app laem024/graphql-items:latest
+docker login
+docker push laem024/graphql-items:latest
+
+docker pull laem024/graphql-items:latest
 
 
 
@@ -15,6 +31,14 @@ kubectl create job --from=cronjob/clean-old-items-cronjob clean-old-items-job-ma
 
 kubectl get pods
 kubectl logs <pod-name>
+
+
+
+RabbitMQ 
+
+http://localhost:15672
+
+usuario: guest, contraseña: guest
 
 
 //GET
